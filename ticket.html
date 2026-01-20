@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WEB入場券 | AquaSync</title>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .ticket-container {
+            max-width: 800px;
+            margin: 80px auto 40px;
+            padding: 0 20px;
+        }
+        .ticket-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        .ticket-header h1 {
+            color: #003366;
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+        .ticket-header p {
+            color: #666;
+            font-size: 0.9rem;
+        }
+        .price-list {
+            margin: 40px 0;
+            display: grid;
+            gap: 15px;
+        }
+        .price-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .price-label {
+            font-weight: 500;
+            color: #333;
+        }
+        .price-value {
+            font-weight: 600;
+            color: #0066cc;
+        }
+        .free-price {
+            color: #4CAF50 !important;
+        }
+        .age-note {
+            font-size: 0.8rem;
+            color: #666;
+            margin-top: 3px;
+        }
+        .purchase-btn {
+            display: block;
+            width: 100%;
+            background: #00bcd4;
+            color: white;
+            text-align: center;
+            padding: 16px;
+            border-radius: 8px;
+            font-weight: 600;
+            text-decoration: none;
+            margin: 40px 0;
+            transition: all 0.3s ease;
+        }
+        .purchase-btn:hover {
+            background: #0097a7;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 188, 212, 0.4);
+        }
+        .section {
+            margin: 50px 0;
+        }
+        .section-title {
+            color: #003366;
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+        .section-title:after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 60px;
+            height: 3px;
+            background: #00bcd4;
+        }
+        .section-subtitle {
+            color: #003366;
+            font-size: 1.1rem;
+            font-weight: 500;
+            margin: 25px 0 15px;
+        }
+        .info-list {
+            list-style-type: none;
+            padding-left: 0;
+            margin: 20px 0;
+        }
+        .info-list li {
+            margin-bottom: 12px;
+            padding-left: 1.2em;
+            position: relative;
+            line-height: 1.6;
+        }
+        .info-list li:before {
+            content: "•";
+            color: #00bcd4;
+            position: absolute;
+            left: 0;
+        }
+        .period-list {
+            list-style-type: none;
+            padding-left: 0;
+            margin: 20px 0;
+        }
+        .period-list li {
+            margin-bottom: 15px;
+            padding-left: 1.5em;
+            text-indent: -1.5em;
+            line-height: 1.6;
+        }
+        .period-list li:before {
+            content: "—";
+            color: #00bcd4;
+            padding-right: 0.8em;
+        }
+        .note-box {
+            background-color: #f5f9ff;
+            padding: 20px;
+            margin: 30px 0;
+            border-radius: 8px;
+        }
+        .warning-text {
+            color: #d32f2f;
+            font-weight: 500;
+        }
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+        .gallery-item {
+            border-radius: 10px;
+            overflow: hidden;
+            height: 180px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+        .gallery-item:hover {
+            transform: translateY(-5px);
+        }
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .info-table {
+            width: 100%;
+            margin: 25px 0;
+            border-collapse: separate;
+            border-spacing: 0;
+        }
+        .info-table th {
+            text-align: left;
+            padding: 12px 0;
+            font-weight: 500;
+            color: #003366;
+            vertical-align: top;
+            width: 30%;
+        }
+        .info-table td {
+            padding: 12px 0;
+            border-bottom: 1px solid #f0f4f8;
+        }
+        @media (max-width: 768px) {
+            .ticket-container {
+                margin-top: 60px;
+            }
+            .ticket-header h1 {
+                font-size: 1.5rem;
+            }
+            .info-table th, 
+            .info-table td {
+                display: block;
+                width: 100%;
+                padding: 8px 0;
+            }
+            .info-table th {
+                padding-top: 15px;
+            }
+            .info-table td {
+                padding-bottom: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <img src="img/aquasynclogo-removebg-preview.png" width="100px" height="40px" alt="AquaSync Logo">
+                    <p>AquaSync</p>
+                </div>
+                <nav>
+                    <ul id="nav-menu">
+                        <li><a href="index.html#home">Home</a></li>
+                        <li><a href="index.html#about">About</a></li>
+                        <li><a href="index.html#gallery">Gallery</a></li>
+                        <li><a href="index.html#contact">Contact</a></li>
+                        <li><a href="login.html"><button class="login-button">Login</button></a></li>
+                    </ul>
+                </nav>
+                <button class="menu-toggle" id="menu-toggle">☰</button>
+            </div>
+        </div>
+    </header>
+
+    <div class="ticket-container">
+        <div class="ticket-header">
+            <h1> AquaSync WEB入場券</h1>
+            <p>スマートフォンで簡単に入場できる電子チケット</p>
+        </div>
+        
+        <div class="price-list">
+            <div class="price-item">
+                <div class="price-label">大人（高校生以上）</div>
+                <div class="price-value">2,500円～</div>
+            </div>
+            
+            <div class="price-item">
+                <div class="price-label">小学・中学生</div>
+                <div class="price-value">1,300円～</div>
+            </div>
+            
+            <div class="price-item">
+                <div>
+                    <div class="price-label">未就学児</div>
+                    <div class="age-note">4歳～</div>
+                </div>
+                <div class="price-value">800円～</div>
+            </div>
+            
+            <div class="price-item">
+                <div class="price-label">4歳未満</div>
+                <div class="price-value free-price">無料</div>
+            </div>
+        </div>
+        
+        <a href="#" class="purchase-btn">チケット購入に進む</a>
+
+        <div class="section">
+            <h2 class="section-title">チケット内容</h2>
+            
+            <h3 class="section-subtitle">入場料</h3>
+            <p>[6月1日(日)～7月18日(金)／7月22日(火)～8月8日(金)／9月18日(月)～31日(日)]</p>
+            <ul class="info-list">
+                <li>おとな（高校生以上）2,500円</li>
+                <li>小・中学生 1,300円</li>
+                <li>幼児（4才以上）800円 ※消費税込み</li>
+            </ul>
+            
+            <p>[7月19日(土)～21日(月)／8月8日(土)～17日(日)]</p>
+            <ul class="info-list">
+                <li>おとな（高校生以上）3,000円</li>
+            </ul>
+            
+            <h3 class="section-subtitle">その他</h3>
+            <ul class="info-list">
+                <li>本チケットの予約・決済が完了されたお客様は、QRコードをご提示のうえ、入場ゲートまでお越しください。</li>
+                <li>施設都合により、予告なく利用不可日が発生する場合があります。ご利用前に施設にご確認ください。</li>
+                <li>【品川プリンズホテル駐車場】をご利用されたお客さまは、こちらのWEB入場券は合算対象となります。</li>
+                <li>※ご利用金額含む5,000円以上のお客さまは3時間まで無料</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h2 class="section-title">営業時間</h2>
+            <p>※営業時間は日によって異なる場合がございます。ご利用の際は事前に営業時間・定休日等をご自身でご確認の上おでかけください。</p>
+            
+            <ul class="period-list">
+                <li>10:00～20:00(最終入場19:00)<br>対象期間：8月1日(日)～7月16日(金)／7月22日(火)～25日(金)／8月25日(月)～31日(日)</li>
+                <li>9:00～20:00(最終入場18:00)<br>対象期間：7月26日(土)～8月8日(金)／8月16日(月)～8月22日(金)</li>
+                <li>9:00～21:00(最終入場20:00)<br>対象期間：7月19日(土)～21日(月)／8月9日(土)～17日(日)</li>
+                <li>9:00～18:00(最終入場17:30)<br>対象期間：8月23日(土)～24日(日)</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h2 class="section-title">キャンセルポリシー</h2>
+            <p>このチケットはキャンセルする場合、以下のキャンセル料が発生します。</p>
+            
+            <table class="info-table">
+                <tr>
+                    <th>利用日の当日から</th>
+                    <td>100%</td>
+                </tr>
+            </table>
+            
+            <div class="note-box warning-text">
+                ※このチケットは当日キャンセル不可（100%キャンセル料）
+            </div>
+        </div>
+
+        <div class="section">
+            <h2 class="section-title">チケットのご利用方法</h2>
+            <p>予約した指定日時になりましたら、直接水族館入口までお越しいただき、取得した日時指定チケットのQRコードをご提示ください。</p>
+            
+            <h3 class="section-subtitle">チケット情報</h3>
+            
+            <table class="info-table">
+                <tr>
+                    <th>対象年齢</th>
+                    <td>指定無し<br>4歳未満はチケット不要です。</td>
+                </tr>
+                <tr>
+                    <th>決済方法</th>
+                    <td>クレジットカード、あと払い (ベイディ)、PayPay</td>
+                </tr>
+                <tr>
+                    <th>入場条件</th>
+                    <td>以下に該当する方はご利用になれません。<br>・暴力団関係者<br>・遮断されている方</td>
+                </tr>
+            </table>
+            
+            <h3 class="section-subtitle">注意事項</h3>
+            <ul class="info-list">
+                <li>避難状況によって入場、利用に制限をかける場合がございます。</li>
+                <li>その他のクーポン、保持券、割引等と併用利用はできません。</li>
+                <li>本チケットは持ち時間を短縮するものではありません。</li>
+                <li>取引によって営業時間が変動する場合があります。</li>
+                <li>飲食物・ペットの持ち込み不可（介助犬等除く）</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h2 class="section-title">施設について</h2>
+            <p>品川駅徒歩2分、他では見れないテクノロジーを活用した水族館「マクセル アクアパーク品川」</p>
+            <p>光・映像と生き物たちが融合した「水族館」のカテゴリーを超えたTOKYOエンターテインメント。都心にいながら約350種、20,000点にも及ぶ海の生き物に出会うことができ、さらに季節や昼夜で異なるドルフィンパフォーマンスも見どころです。</p>
+            
+            <div class="note-box">
+                <h3 class="section-subtitle">割引情報</h3>
+                <ul class="info-list">
+                    <li>身体障害者手帳・精神障害者保健福祉手帳・療育手帳をお持ちのお客さまと同伴の方1名さまは、入場券(当日)が半額となります。現地にてチケットをお買い求めください。</li>
+                    <li>高齢・品川エリアの4つのプリンスホテルにご宿泊のお客さまは、入場料金が割引となります。チケットセンター(1F)にて、ルームキーまたはご宿泊証明書をご提示の上、現地にてチケットをお買い求めください。</li>
+                </ul>
+            </div>
+
+            <h3 class="section-subtitle">マクセル アクアパーク品川の他のチケット</h3>
+            
+            <h4>イルカにタッチ（小学生以上有料）＊各回12組（1組4名まで）</h4>
+            <p>900円～</p>
+            
+            <h4>ワンダートークガイド＊完売や販売中止の場合、「現在販売しておりません」と表示されます。</h4>
+            <p>2,000円～</p>
+        </div>
+        
+        <div class="section">
+            <h2 class="section-title">ギャラリー</h2>
+            <div class="gallery-grid">
+                <div class="gallery-item">
+                    <img src="https://tse4.mm.bing.net/th/id/OIP.PlK9uzJRxZGt8fRHRy8RJAHaE9?rs=1&pid=ImgDetMain&o=7&rm=3" alt="AquaSync Gallery">
+                </div>
+                <div class="gallery-item">
+                    <img src="https://tse1.mm.bing.net/th/id/OIP.z9z-6XU70rYCTKnnlnIyrwHaE8?rs=1&pid=ImgDetMain&o=7&rm=3" alt="AquaSync Gallery">
+                </div>
+                <div class="gallery-item">
+                    <img src="https://www.pasadenastarnews.com/wp-content/uploads/2025/02/OCR-L-SEAWORLD-JEWEL-SEA-JELLYFISH-0218-01.jpg?w=1860" alt="AquaSync Gallery">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 AquaSync. All rights reserved. | Discover the wonders of marine life.</p>
+        </div>
+    </footer>
+
+    <div class="c-pagetop" id="js-pagetop"> 
+        <img src="img/arrow_upward_24dp_FFFF_FILL0_wght400_GRAD0_opsz24.jpg" alt="Back to top">
+    </div>         
+
+    <script src="js/main.js/main.js"></script>
+    <script>
+        // Mobile menu toggle
+        document.getElementById('menu-toggle').addEventListener('click', function() {
+            document.getElementById('nav-menu').classList.toggle('active');
+        });
+        
+        // Back to top button
+        window.addEventListener('scroll', function() {
+            var backToTopButton = document.getElementById('js-pagetop');
+            if (window.pageYOffset > 300) {
+                backToTopButton.classList.add('c-pagetop--visible');
+            } else {
+                backToTopButton.classList.remove('c-pagetop--visible');
+            }
+        });
+        
+        document.getElementById('js-pagetop').addEventListener('click', function() {
+            window.scrollTo({top: 0, behavior: 'smooth'});
+        });
+    </script>
+</body>
+</html>
